@@ -6,49 +6,25 @@ import (
 	"testing"
 )
 
-func TestIndexHandler(t *testing.T) {
-	req, err := http.NewRequest("GET", "/", nil)
+func TestHealthCheckHandler(t *testing.T) {
+	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
+	// pass 'nil' as the third parameter.
+	req, err := http.NewRequest("GET", "/api/health", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(indexHandler)
-	handler.ServeHTTP(rr, req)
+	InitializeRouter().ServeHTTP(rr, req)
 
+	// Check the status code is what we expect.
 	if status := rr.Code; status != http.StatusOK {
-		t.Errorf(
-			"unexpected status: got (%v) want (%v)",
-			status,
-			http.StatusOK,
-		)
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	expected := "Hello, World!"
-	if rr.Body.String() != expected {
-		t.Errorf(
-			"unexpected body: got (%v) want (%v)",
-			rr.Body.String(),
-			"Hello, World!",
-		)
-	}
-}
-
-func TestIndexHandlerNotFound(t *testing.T) {
-	req, err := http.NewRequest("GET", "/404", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(indexHandler)
-	handler.ServeHTTP(rr, req)
-
-	if status := rr.Code; status != http.StatusNotFound {
-		t.Errorf(
-			"unexpected status: got (%v) want (%v)",
-			status,
-			http.StatusNotFound,
-		)
+	expectedContentType := "application/json; charset=utf-8"
+	if rr.Header().Get("Content-type") != expectedContentType {
+		t.Errorf("handler returned wrong content-type: got %v want %v", rr.Header().Get("Content-type"), expectedContentType)
 	}
 }
