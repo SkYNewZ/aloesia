@@ -28,9 +28,15 @@ func contentTypeMiddleware(next http.Handler) http.Handler {
 func InitializeRouter() *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
 	apiRouter := r.PathPrefix("/api").Subrouter()
-
 	apiRouter.HandleFunc("/health", controllers.HealthCheckHandler).Methods(http.MethodGet)
 
+	userRouter := apiRouter.PathPrefix("/users").Subrouter()
+	userRouter.HandleFunc("", controllers.CreateUserHandler).Methods(http.MethodPost)
+	userRouter.HandleFunc("/{id}", controllers.GetUserHandler).Methods(http.MethodGet)
+	userRouter.HandleFunc("/{id}", controllers.DeleteUserHandler).Methods(http.MethodDelete)
+	userRouter.HandleFunc("", controllers.GetAllUsersHandler).Methods(http.MethodGet)
+
+	// Disable http access log on testing
 	if os.Getenv("CI") == "" {
 		r.Use(loggingMiddleware)
 	}

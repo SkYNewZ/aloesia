@@ -1,6 +1,7 @@
 package models
 
-type personal struct {
+// Personal personal patient informations
+type Personal struct {
 	ID                    string `json:"id"`
 	LastName              string `json:"last_name"`
 	FirstName             string `json:"first_name"`

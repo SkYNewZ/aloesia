@@ -10,11 +10,13 @@ import (
 	"time"
 
 	"github.com/SkYNewZ/aloesia/config"
+	"github.com/asaskevich/govalidator"
 )
 
 func main() {
 	config.InitFirestoreDatabase()
 	router := InitializeRouter()
+	govalidator.SetFieldsRequiredByDefault(true)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -52,5 +54,6 @@ func main() {
 	// <-ctx.Done() if your application should wait for other services
 	// to finalize based on context cancellation.
 	log.Println("😎 Shutting down gracefully")
+	config.CloseConnection()
 	os.Exit(0)
 }

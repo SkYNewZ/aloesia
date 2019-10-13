@@ -2,7 +2,7 @@ package models
 
 // Patient model struct
 type Patient struct {
-	Personp personal `json:"person"`
+	Person Personal `json:"person"`
 
 	BirthdayDate         string `json:"birthday_date"`
 	FamilyStatus         string `json:"family_status"`

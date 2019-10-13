@@ -2,7 +2,7 @@ package models
 
 // Pharmacist model struct
 type Pharmacist struct {
-	Personp personal `json:"person"`
+	Person Personal `json:"person"`
 
 	CompanyName          string  `json:"compagny_name"`
 	Turnover             float32 `json:"turnover"`

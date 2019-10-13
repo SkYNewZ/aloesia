@@ -2,7 +2,7 @@ package models
 
 // Institution model struct
 type Institution struct {
-	Person personal `json:"person"`
+	Person Personal `json:"person"`
 
 	TrainingsSold int             `json:"trainings_sold"`
 	CompanyName   string          `json:"compagny_name"`

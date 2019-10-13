@@ -2,7 +2,7 @@ package models
 
 // Liberal model struct
 type Liberal struct {
-	Person        personal `json:"person"`
+	Person        Personal `json:"person"`
 	TrainingsSold int      `json:"trainings_sold"`
 }
 
