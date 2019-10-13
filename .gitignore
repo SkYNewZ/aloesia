@@ -9,6 +9,7 @@
 *.dll
 *.so
 *.dylib
+/aloesia
 
 # Test binary, built with `go test -c`
 *.test
@@ -25,5 +26,8 @@ vendor/
 
 # End of https://www.gitignore.io/api/go
 
-/aloesia
+# Vscode launch config files
 .vscode
+
+# Dev env
+.env
