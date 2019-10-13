@@ -1,2 +1,5 @@
 runtime: go112 # replace with go111 for Go 1.11
 service: default
+
+env_variables:
+  GOOGLE_PROJECT_ID: GOOGLE_PROJECT_ID_CHANGE
