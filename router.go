@@ -36,6 +36,12 @@ func InitializeRouter() *mux.Router {
 	userRouter.HandleFunc("/{id}", controllers.DeleteUserHandler).Methods(http.MethodDelete)
 	userRouter.HandleFunc("", controllers.GetAllUsersHandler).Methods(http.MethodGet)
 
+	patientRouter := apiRouter.PathPrefix("/patients").Subrouter()
+	patientRouter.HandleFunc("", controllers.GetAllPatientsHandler).Methods(http.MethodGet)
+	patientRouter.HandleFunc("", controllers.CreatePatientHandler).Methods(http.MethodPost)
+	patientRouter.HandleFunc("/{id}", controllers.GetOnePatientHandler).Methods(http.MethodGet)
+	patientRouter.HandleFunc("/{id}", controllers.DeletePatientHandler).Methods(http.MethodDelete)
+
 	// Disable http access log on testing
 	if os.Getenv("CI") == "" {
 		r.Use(loggingMiddleware)

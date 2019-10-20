@@ -13,6 +13,8 @@ require (
 	github.com/pilu/config v0.0.0-20131214182432-3eb99e6c0b9a // indirect
 	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017 // indirect
 	github.com/satori/go.uuid v1.2.0
+	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
+	github.com/ttacon/libphonenumber v1.0.1
 	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
 	google.golang.org/api v0.9.0
 	google.golang.org/grpc v1.21.1

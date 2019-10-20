@@ -31,3 +31,7 @@ vendor/
 
 # Dev env
 .env
+.envrc
+
+# Tmp dir for fresh package
+tmp

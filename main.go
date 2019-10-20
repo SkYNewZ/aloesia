@@ -10,13 +10,11 @@ import (
 	"time"
 
 	"github.com/SkYNewZ/aloesia/config"
-	"github.com/asaskevich/govalidator"
 )
 
 func main() {
 	config.InitFirestoreDatabase()
 	router := InitializeRouter()
-	govalidator.SetFieldsRequiredByDefault(true)
 
 	port := os.Getenv("PORT")
 	if port == "" {
