@@ -11,12 +11,21 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+const (
+	// SuperAdminRole role
+	SuperAdminRole string = "SUPER_ADMIN_ROLE"
+
+	// AdminRole role
+	AdminRole string = "ADMIN_ROLE"
+)
+
 // User model struct
 type User struct {
-	ID                 string    `json:"id" firestore:"id" valid:"uuidv4"`
-	Email              string    `json:"email" firestore:"email" valid:"email,required"`
-	Password           string    `json:"password" firestore:"password" valid:"alphanum,required"`
-	LastConnectionDate string    `json:"last_connection_date" firestore:"last_connection_date"`
+	ID                 string    `json:"id" firestore:"id" mapstructure:"id" valid:"uuidv4"`
+	Email              string    `json:"email" firestore:"email" mapstructure:"email" valid:"email,required"`
+	Password           string    `json:"password" firestore:"password" mapstructure:"password" valid:"alphanum,required"`
+	LastConnectionDate string    `json:"last_connection_date" firestore:"last_connection_date" mapstructure:"last_connection_date"`
+	Role               string    `json:"role" firestore:"role" mapstructure:"role" valid:"role"`
 	CreatedAt          time.Time `json:"created_at" mapstructure:"created_at" firestore:"created_at"`
 	UpdatedAt          time.Time `json:"updated_at" mapstructure:"updated_at" firestore:"updated_at"`
 }
@@ -92,4 +101,14 @@ func userAlreadyExist(email string) (bool, error) {
 		found = true
 	}
 	return found, nil
+}
+
+// IsSuperAdmin if user is super admin
+func (u *User) IsSuperAdmin() bool {
+	return u.Role == SuperAdminRole
+}
+
+// IsAdmin if user is admin
+func (u *User) IsAdmin() bool {
+	return u.Role == AdminRole || u.IsSuperAdmin()
 }
