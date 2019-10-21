@@ -33,6 +33,12 @@ type User struct {
 // Users many users
 type Users []User
 
+// Credentials authentication user login
+type Credentials struct {
+	Email    string `json:"email" valid:"email,required"`
+	Password string `json:"password" valid:"required"`
+}
+
 // CreateUser creates user on Firestore
 func CreateUser(u *User) error {
 	// check if user already exist
@@ -117,4 +123,21 @@ func (u *User) IsSuperAdmin() bool {
 // IsAdmin if user is admin
 func (u *User) IsAdmin() bool {
 	return u.Role == AdminRole || u.IsSuperAdmin()
+}
+
+// FindUserByEmailAndPassword return user matching password/email
+func FindUserByEmailAndPassword(email string, password string) (*User, error) {
+	iter := config.Firestore().Collection(firestoreUsersCollectionName).Where("email", "==", email).Where("password", "==", password).Documents(context.Background())
+	var u User
+	for {
+		doc, err := iter.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+		mapstructure.Decode(doc.Data(), &u)
+	}
+	return &u, nil
 }

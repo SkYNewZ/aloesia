@@ -29,6 +29,7 @@ func InitializeRouter() *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
 	apiRouter := r.PathPrefix("/api").Subrouter()
 	apiRouter.HandleFunc("/health", controllers.HealthCheckHandler).Methods(http.MethodGet)
+	apiRouter.HandleFunc("/login", controllers.LoginHandler).Methods(http.MethodPost)
 
 	userRouter := apiRouter.PathPrefix("/users").Subrouter()
 	userRouter.HandleFunc("", controllers.CreateUserHandler).Methods(http.MethodPost)

@@ -1,2 +1,6 @@
 runtime: go112 # replace with go111 for Go 1.11
 service: api
+
+env_variables:
+  JWT_SECRET_KEY: JWT_SECRET_KEY_CHANGE
+

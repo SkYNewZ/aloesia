@@ -1,6 +1,8 @@
 package models
 
 import (
+	"os"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/ttacon/libphonenumber"
 )
@@ -27,4 +29,7 @@ func init() {
 	govalidator.TagMap["role"] = govalidator.Validator(func(str string) bool {
 		return str == SuperAdminRole || str == AdminRole
 	})
+
+	// Init jwt key
+	JwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 }
