@@ -36,7 +36,7 @@ type Users []User
 // CreateUser creates user on Firestore
 func CreateUser(u *User) error {
 	// check if user already exist
-	if found, _ := userAlreadyExist(u.Email); found == true {
+	if found, _ := userAlreadyExist(u.Email); found {
 		return errors.New("User already exist")
 	}
 
@@ -63,7 +63,10 @@ func GetAllUsers() (*Users, error) {
 			return nil, err
 		}
 		var u User
-		mapstructure.Decode(doc.Data(), &u)
+		err = mapstructure.Decode(doc.Data(), &u)
+		if err != nil {
+			return nil, err
+		}
 		data = append(data, u)
 	}
 	return &data, nil
@@ -76,7 +79,10 @@ func GetUser(id string) (*User, error) {
 		return &User{}, err
 	}
 	var u User
-	mapstructure.Decode(dsnap.Data(), &u)
+	err = mapstructure.Decode(dsnap.Data(), &u)
+	if err != nil {
+		return nil, err
+	}
 	return &u, nil
 }
 

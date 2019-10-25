@@ -32,7 +32,7 @@ func main() {
 
 	log.Printf("🚀 Listening on port %s", port)
 	// Run our server in a goroutine so that it doesn't block.
-	go srv.ListenAndServe()
+	go srv.ListenAndServe() //nolint
 
 	c := make(chan os.Signal, 1)
 	// We'll accept graceful shutdowns when quit via SIGINT (Ctrl+C)
@@ -47,7 +47,7 @@ func main() {
 	defer cancel()
 	// Doesn't block if no connections, but will otherwise wait
 	// until the timeout deadline.
-	srv.Shutdown(ctx)
+	srv.Shutdown(ctx) //nolint
 	// Optionally, you could run srv.Shutdown in a goroutine and block on
 	// <-ctx.Done() if your application should wait for other services
 	// to finalize based on context cancellation.

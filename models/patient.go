@@ -52,7 +52,10 @@ func GetAllPatients() (*Patients, error) {
 			return nil, err
 		}
 		var patient Patient
-		mapstructure.Decode(doc.Data(), &patient)
+		err = mapstructure.Decode(doc.Data(), &patient)
+		if err != nil {
+			return nil, err
+		}
 		data = append(data, patient)
 	}
 	return &data, nil
@@ -65,7 +68,10 @@ func GetOnePatient(id string) (*Patient, error) {
 		return &Patient{}, err
 	}
 	var patient Patient
-	mapstructure.Decode(dsnap.Data(), &patient)
+	err = mapstructure.Decode(dsnap.Data(), &patient)
+	if err != nil {
+		return nil, err
+	}
 	return &patient, nil
 }
 

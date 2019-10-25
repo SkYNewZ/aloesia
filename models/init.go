@@ -6,10 +6,9 @@ import (
 )
 
 const (
-	firestoreUsersCollectionName        = "users"
-	firestoreLiberalTypesCollectionName = "liberal_types"
-	firestorePatientsCollectionName     = "patients"
-	validPhoneNumberCountryCode         = "FR"
+	firestoreUsersCollectionName    = "users"
+	firestorePatientsCollectionName = "patients"
+	validPhoneNumberCountryCode     = "FR"
 )
 
 func init() {

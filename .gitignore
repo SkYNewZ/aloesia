@@ -35,3 +35,6 @@ vendor/
 
 # Tmp dir for fresh package
 tmp
+
+# Binaries
+/bin

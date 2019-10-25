@@ -16,10 +16,10 @@ func GetAllPatientsHandler(w http.ResponseWriter, r *http.Request) {
 	u, err := models.GetAllPatients()
 	if err != nil {
 		w.WriteHeader(http.StatusFailedDependency)
-		json.NewEncoder(w).Encode(err)
+		json.NewEncoder(w).Encode(err) //nolint
 		return
 	}
-	json.NewEncoder(w).Encode(&u)
+	json.NewEncoder(w).Encode(&u) //nolint
 }
 
 // GetOnePatientHandler return one patient by given id
@@ -35,23 +35,23 @@ func GetOnePatientHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusFailedDependency)
-		json.NewEncoder(w).Encode(err)
+		json.NewEncoder(w).Encode(err) //nolint
 		return
 	}
 
-	json.NewEncoder(w).Encode(&u)
+	json.NewEncoder(w).Encode(&u) //nolint
 }
 
 // CreatePatientHandler creates patient
 func CreatePatientHandler(w http.ResponseWriter, r *http.Request) {
 	var patient models.Patient
-	json.NewDecoder(r.Body).Decode(&patient)
+	json.NewDecoder(r.Body).Decode(&patient) //nolint
 
 	// if given patient is invalid
 	_, err := govalidator.ValidateStruct(&patient)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(NewBadRequestError(http.StatusBadRequest, err.Error()))
+		json.NewEncoder(w).Encode(NewBadRequestError(http.StatusBadRequest, err.Error())) //nolint
 		return
 	}
 
@@ -60,12 +60,12 @@ func CreatePatientHandler(w http.ResponseWriter, r *http.Request) {
 	// unexpected error
 	if err != nil {
 		w.WriteHeader(http.StatusFailedDependency)
-		json.NewEncoder(w).Encode(err)
+		json.NewEncoder(w).Encode(err) //nolint
 		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(&patient)
+	json.NewEncoder(w).Encode(&patient) //nolint
 }
 
 // DeletePatientHandler delete patient by given id
@@ -81,7 +81,7 @@ func DeletePatientHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusFailedDependency)
-		json.NewEncoder(w).Encode(err)
+		json.NewEncoder(w).Encode(err) //nolint
 		return
 	}
 

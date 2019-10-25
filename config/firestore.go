@@ -13,7 +13,7 @@ var firestoreClient *firestore.Client
 // InitFirestoreDatabase init main firestore client
 func InitFirestoreDatabase() {
 	var err error
-	firestoreClient, err = firestore.NewClient(context.Background(), os.Getenv("GOOGLE_PROJECT_ID"))
+	firestoreClient, err = firestore.NewClient(context.Background(), os.Getenv("GOOGLE_CLOUD_PROJECT"))
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
