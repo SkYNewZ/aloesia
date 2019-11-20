@@ -71,5 +71,6 @@ jobs:
         uses: actions/gcloud/cli@master
         env:
           CLOUDSDK_CORE_PROJECT: ${{secrets.GCLOUD_PROJECT_ID}}
+          TAG: ${GITHUB_REF:10}
         with:
-          args: --quiet app deploy app.yaml
+          args: --quiet --verbosity=error app deploy app.yaml --version=$TAG
