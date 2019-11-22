@@ -1,10 +1,11 @@
 # Project variables
 NAME        := aloesia
-VENDOR      := skynewz
+VENDOR      := SkYNewZ
 DESCRIPTION := Aloesia Management API
 MAINTAINER  := Quentin Lemaire <quentin@lemairepro.fr>
 URL         := https://github.com/$(VENDOR)/$(NAME)
 LICENSE     := GPL-3
+PACKAGE			:= github.com/$(VENDOR)/$(NAME)
 
 # Build variables
 BUILD_DIR   := bin
@@ -31,6 +32,7 @@ all: clean lint test build
 clean: ## Clean workspace
 	@ $(MAKE) --no-print-directory log-$@
 	rm -rf ./$(BUILD_DIR)
+	rm -rf ./$(NAME)
 
 .PHONY: lint
 lint: ## Run linter
@@ -56,16 +58,16 @@ verify: ## Verify 'vendor' dependencies
 ## Build targets ##
 ###################
 .PHONY: build
-build: clean ## Build binary for current OS/ARCH
+build: clean vendor ## Build binary for current OS/ARCH
 	@ $(MAKE) --no-print-directory log-$@
-	$(GOBUILD) -o ./$(BUILD_DIR)/$(GOOS)-$(GOARCH)/$(NAME)
+	$(GOBUILD) -ldflags "-X $(PACKAGE)/config.BuildTime=$(BUILD_DATE) -X $(PACKAGE)/config.CommitHash=$(VERSION)" -o $(BUILD_DIR)/$(NAME)
 
 .PHONY: build-all
 build-all: GOOS      = linux darwin windows freebsd
 build-all: GOARCH    = amd64
 build-all: clean gox ## Build binary for all OS/ARCH
 	@ $(MAKE) --no-print-directory log-$@
-	@ gox -arch="$(GOARCH)" -os="$(GOOS)" -output="./$(BUILD_DIR)/{{.Dir}}-$(VERSION)-{{.OS}}-{{.Arch}}"
+	gox -arch="$(GOARCH)" -os="$(GOOS)" -output="./$(BUILD_DIR)/{{.Dir}}-$(VERSION)-{{.OS}}-{{.Arch}}" -ldflags "-X $(PACKAGE)/config.BuildTime=$(BUILD_DATE) -X $(PACKAGE)/config.CommitHash=$(VERSION)"
 
 ####################
 ## Deploy targets ##
@@ -73,7 +75,7 @@ build-all: clean gox ## Build binary for all OS/ARCH
 .PHONY: deploy
 deploy: ## Deploy to AppEngine
 	@ $(MAKE) --no-print-directory log-$@
-	@gcloud --quiet --verbosity=error app deploy app.yaml --version=$(VERSION)
+	gcloud --quiet --verbosity=error app deploy app.yaml --version=$(VERSION)
 
 ####################
 ## Helper targets ##

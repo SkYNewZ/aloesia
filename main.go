@@ -10,9 +10,22 @@ import (
 	"time"
 
 	"github.com/SkYNewZ/aloesia/config"
+	"github.com/jessevdk/go-flags"
 )
 
+var parser = flags.NewParser(&config.Options, flags.Default)
+
 func main() {
+
+	// Parse flags to print help message and version
+	if _, err := parser.Parse(); err != nil {
+		if flagsErr, ok := err.(*flags.Error); ok && flagsErr.Type == flags.ErrHelp {
+			os.Exit(0)
+		} else {
+			os.Exit(1)
+		}
+	}
+
 	config.InitFirestoreDatabase()
 	router := InitializeRouter()
 
