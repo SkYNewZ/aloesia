@@ -3,6 +3,15 @@ variable "project_id" {
   description = "GCP project ID"
 }
 
+variable "project_name" {
+  type        = string
+  description = "GCP project name"
+}
+
+variable "billing_account" {
+  type = string
+}
+
 variable "region" {
   type    = string
   default = "europe-west2"
