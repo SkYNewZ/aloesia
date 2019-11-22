@@ -68,6 +68,14 @@ build-all: clean gox ## Build binary for all OS/ARCH
 	@ gox -arch="$(GOARCH)" -os="$(GOOS)" -output="./$(BUILD_DIR)/{{.Dir}}-$(VERSION)-{{.OS}}-{{.Arch}}"
 
 ####################
+## Deploy targets ##
+####################
+.PHONY: deploy
+deploy: ## Deploy to AppEngine
+	@ $(MAKE) --no-print-directory log-$@
+	@gcloud --quiet --verbosity=error app deploy app.yaml --version=$(VERSION)
+
+####################
 ## Helper targets ##
 ####################
 .PHONY: gox
