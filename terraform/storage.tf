@@ -2,23 +2,20 @@
 resource "google_project_service" "storage" {
   service            = "storage-component.googleapis.com"
   disable_on_destroy = false
-  project            = var.project_id
+  project            = module.generic-project.project_id
 }
 
 resource "google_storage_bucket" "source_code" {
-  project       = var.project_id
-  name          = format("%s-functions-source-code", var.project_id)
+  project       = module.generic-project.project_id
+  name          = format("%s-functions-source-code", module.generic-project.project_id)
   location      = var.region
   force_destroy = true
-
-  labels = var.labels
 
   depends_on = [
     google_project_service.storage
   ]
 }
 
-### Send emails code ###
 data "archive_file" "send_email" {
   type        = "zip"
   output_path = format("%s/../bin/send_email.zip", path.module)
@@ -35,4 +32,3 @@ resource "google_storage_bucket_object" "send_email" {
   bucket = google_storage_bucket.source_code.name
   source = data.archive_file.send_email.output_path
 }
-### // Send emails code ###

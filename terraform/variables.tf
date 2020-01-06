@@ -1,31 +1,15 @@
 variable "project_id" {
   type        = string
-  description = "GCP project ID"
-}
-
-variable "project_name" {
-  type        = string
-  description = "GCP project name"
-}
-
-variable "billing_account" {
-  type = string
+  description = "Project it to set to"
 }
 
 variable "region" {
-  type    = string
-  default = "europe-west2"
-}
-
-variable "labels" {
-  type        = map
-  description = "Labels map to apply to resources"
-  default = {
-    creator = "skynewz"
-  }
+  type        = string
+  description = "Where to deploy resources"
+  default     = "europe-west1"
 }
 
 variable "send_email_environment_variables" {
-  type        = map
-  description = "Map of environments variables to apply to send_email Cloud Function"
+  type = map
+  description = "Map of key/values HCL pairs to set into mail Cloud Function"
 }

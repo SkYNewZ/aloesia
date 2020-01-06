@@ -1,6 +1,6 @@
-resource "google_project" "project" {
-  name                = var.project_name
+module "generic-project" {
+  source              = "github.com/skynewz/generic-gcp-project"
+  folder_name         = "pro"
   project_id          = var.project_id
-  billing_account     = var.billing_account
-  auto_create_network = false
+  project_name        = "Aloesia"
 }
