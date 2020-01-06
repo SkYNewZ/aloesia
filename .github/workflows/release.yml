@@ -67,9 +67,8 @@ jobs:
       - name: Install vendor directory
         run: make vendor
 
-      - name: Deploy
-        uses: actions/gcloud/cli@master
-        env:
-          CLOUDSDK_CORE_PROJECT: ${{secrets.GCLOUD_PROJECT_ID}}
-        with:
-          args: --quiet --verbosity=error app deploy app.yaml
+      - name: Deploy on staging
+        run: make deploy-staging
+
+      - name: Deploy on prod
+        run: make deploy

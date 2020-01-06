@@ -75,7 +75,12 @@ build-all: clean gox ## Build binary for all OS/ARCH
 .PHONY: deploy
 deploy: ## Deploy to AppEngine
 	@ $(MAKE) --no-print-directory log-$@
-	gcloud --quiet --verbosity=error app deploy app.yaml --version=$(VERSION)
+	gcloud --quiet --verbosity=error --project=$(GCP_PROJECT) app deploy --version=$(COMMIT_HASH) app.yaml dispatch.yaml
+
+.PHONY: deploy
+deploy-staging: ## Deploy to AppEngine for staging
+	@ $(MAKE) --no-print-directory log-$@
+	gcloud --quiet --verbosity=error --project=$(GCP_PROJECT) app deploy --version=staging --no-promote app.yaml dispatch.yaml
 
 ####################
 ## Helper targets ##
