@@ -20,7 +20,7 @@ resource "google_cloudfunctions_function" "send_email" {
 
   event_trigger {
     event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
-    resource   = module.pubsub_send_email.topic
+    resource   = google_pubsub_topic.topic.id
 
     failure_policy {
       retry = false

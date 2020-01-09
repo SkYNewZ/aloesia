@@ -1,6 +1,4 @@
-module "pubsub_send_email" {
-  source     = "terraform-google-modules/pubsub/google"
-  version    = "~> 1.0"
-  project_id = module.generic-project.project_id
-  topic      = "send_email"
+resource "google_pubsub_topic" "topic" {
+  name    = "send_email"
+  project = module.generic-project.project_id
 }
