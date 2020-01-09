@@ -38,7 +38,7 @@ type Patients []Patient
 // GetAllPatients return all patients from database
 func GetAllPatients() (*Patients, error) {
 	iter := config.Firestore().Collection(firestorePatientsCollectionName).Documents(context.Background())
-	var data Patients
+	data := make(Patients, 0)
 	// if there is no data neither collection
 	if iter == nil {
 		return &data, nil

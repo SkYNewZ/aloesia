@@ -53,7 +53,7 @@ func CreateUser(u *User) error {
 // GetAllUsers returns all users
 func GetAllUsers() (*Users, error) {
 	iter := config.Firestore().Collection(firestoreUsersCollectionName).Documents(context.Background())
-	var data Users
+	data := make(Users, 0)
 	for {
 		doc, err := iter.Next()
 		if err == iterator.Done {
