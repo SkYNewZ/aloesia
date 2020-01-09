@@ -12,6 +12,7 @@ BUILD_DIR   := bin
 COMMIT_HASH ?= $(shell git rev-parse --short HEAD 2>/dev/null)
 BUILD_DATE  ?= $(shell date +%FT%T%z)
 VERSION     ?= $(shell git describe --tags --exact-match 2>/dev/null || git describe --tags 2>/dev/null || echo "v0.0.0-$(COMMIT_HASH)")
+GCP_PROJECT := aloesia-nvhs34
 
 # Go variables
 GOCMD       := GO111MODULE=on go
@@ -73,7 +74,7 @@ build-all: clean gox ## Build binary for all OS/ARCH
 ## Deploy targets ##
 ####################
 .PHONY: deploy
-deploy: ## Deploy to AppEngine
+deploy: ## Deploy to AppEngine for production
 	@ $(MAKE) --no-print-directory log-$@
 	gcloud --quiet --verbosity=error --project=$(GCP_PROJECT) app deploy --version=$(COMMIT_HASH) app.yaml dispatch.yaml
 

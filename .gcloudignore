@@ -3,6 +3,6 @@
 .gitignore
 .gitattributes
 terraform
-
+.github
 
 #!include:.gitignore
