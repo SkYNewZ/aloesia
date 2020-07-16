@@ -81,6 +81,5 @@ if __name__ == "__main__":
     encoded_dict = "coucou"
     encoded_dict = encoded_dict.encode("utf-8")
     base64_dict = base64.b64encode(encoded_dict)
-    event = {}
-    event["data"] = base64_dict
+    event = {"data": base64_dict}
     send_mail(event, None)
